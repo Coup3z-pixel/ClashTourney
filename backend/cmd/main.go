@@ -1,14 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/gorilla/mux"
+	"clash-tourney.com/api"
+	"clash-tourney.com/db"
 )
 
 // spaHandler implements the http.Handler interface, so we can use it
@@ -48,12 +48,20 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	router := mux.NewRouter()
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		databaseURL = "postgres://user:password@localhost:5432/clash_tourney?sslmode=disable"
+	}
 
-	router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
-		// an example API handler
-		json.NewEncoder(w).Encode(map[string]bool{"ok": true})
-	})
+	db, err := db.NewDB(databaseURL)
+	if err != nil {
+		log.Fatalf("failed to connect to database: %v", err)
+	}
+	defer db.Close()
+
+	log.Println("database connection successful")
+
+	router := api.NewRouter(db)
 
 	spa := spaHandler{staticPath: "build", indexPath: "index.html"}
 	router.PathPrefix("/").Handler(spa)
