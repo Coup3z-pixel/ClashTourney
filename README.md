@@ -20,3 +20,6 @@ Svelte offers a smooth and productive development experience for building intera
 # Design Docs
 ## Server Architecture
 ![Server Structure](/docs/Server-Architecture.png)
+
+## ER Diagram
+![ER Diagram](/docs/ClashTourneyERDiagram.png)
