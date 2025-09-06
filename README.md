@@ -9,13 +9,14 @@ The solution should be a website for easy distribution and broad accessibility. 
 
 # Technology
 ## Database: PostgreSQL
-Reason: PostgreSQL is a robust, reliable, and widely trusted relational database. It handles structured data extremely well, making it ideal for managing groups, players, points, and tournament histories. It is also scalable and performant, capable of supporting both small-scale leagues and larger competitions as the website grows. Its strong support for ACID transactions ensures data consistency, which is crucial for accurately tracking scores and tournament outcomes.
+PostgreSQL is a robust, reliable, and widely trusted relational database. It handles structured data extremely well, making it ideal for managing groups, players, points, and tournament histories. It is also scalable and performant, capable of supporting both small-scale leagues and larger competitions as the website grows. Its strong support for ACID transactions ensures data consistency, which is crucial for accurately tracking scores and tournament outcomes.
 
 ## Backend: Go
-Reason: Go is an efficient and powerful language for building web backends. Using sqlx, it provides type-safe and convenient SQL handling, along with code generation for SQL queries, which reduces boilerplate and errors. Go’s standard library and web frameworks allow for modular web server development, enabling easy splitting of handlers, routing, and API endpoints. It also offers excellent concurrency support, which is useful if the website needs to handle multiple users and API requests simultaneously.
+Go is an efficient and powerful language for building web backends. Using sqlx, it provides type-safe and convenient SQL handling, along with code generation for SQL queries, which reduces boilerplate and errors. Go’s standard library and web frameworks allow for modular web server development, enabling easy splitting of handlers, routing, and API endpoints. It also offers excellent concurrency support, which is useful if the website needs to handle multiple users and API requests simultaneously.
 
 ## Frontend: Svelte
-Reason: Svelte offers a smooth and productive development experience for building interactive web interfaces. Unlike some other frameworks, it compiles components to highly efficient JavaScript, resulting in fast page loads and responsive UI. Its reactive data handling makes it easy to manage dynamic elements like leaderboards, points, and tournament brackets. Additionally, Svelte’s syntax is straightforward and intuitive, making it quicker to write and maintain compared to more verbose frameworks, without sacrificing flexibility or performance.
+Svelte offers a smooth and productive development experience for building interactive web interfaces. Unlike some other frameworks, it compiles components to highly efficient JavaScript, resulting in fast page loads and responsive UI. Its reactive data handling makes it easy to manage dynamic elements like leaderboards, points, and tournament brackets. Additionally, Svelte’s syntax is straightforward and intuitive, making it quicker to write and maintain compared to more verbose frameworks, without sacrificing flexibility or performance.
 
 # Design Docs
-
+## Server Architecture
+![Server Structure](/docs/Server-Architecture.png)
