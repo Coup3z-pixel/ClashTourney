@@ -1,15 +1,15 @@
 package api
 
 import (
-	"database/sql"
 	"encoding/json"
 	"net/http"
 
 	"clash-tourney.com/api/handlers"
+	"clash-tourney.com/db"
 	"github.com/gorilla/mux"
 )
 
-func NewRouter(db *sql.DB) *mux.Router {
+func NewRouter(queries *db.Queries) *mux.Router {
 	router := mux.NewRouter()
 
 	apiRouter := router.PathPrefix("/api").Subrouter()
@@ -19,9 +19,9 @@ func NewRouter(db *sql.DB) *mux.Router {
 		json.NewEncoder(w).Encode(map[string]bool{"ok": true})
 	})
 
-	apiRouter.HandleFunc("/tournaments", handlers.SetupTournamentHandler(db)).Methods("POST")
-	apiRouter.HandleFunc("/tournaments/{id}/enter", handlers.EnterTournamentHandler(db)).Methods("POST")
-	apiRouter.HandleFunc("/games/{id}", handlers.UpdateGameHandler(db)).Methods("PUT")
+	apiRouter.HandleFunc("/tournaments", handlers.SetupTournamentHandler(queries)).Methods("POST")
+	apiRouter.HandleFunc("/tournaments/{id}/enter", handlers.EnterTournamentHandler(queries)).Methods("POST")
+	apiRouter.HandleFunc("/games/{id}", handlers.UpdateGameHandler(queries)).Methods("PUT")
 
 	return router
 }

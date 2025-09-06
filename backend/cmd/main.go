@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -9,6 +10,7 @@ import (
 
 	"clash-tourney.com/api"
 	"clash-tourney.com/db"
+	"github.com/jackc/pgx/v5"
 )
 
 // spaHandler implements the http.Handler interface, so we can use it
@@ -48,20 +50,21 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	databaseURL := os.Getenv("DATABASE_URL")
-	if databaseURL == "" {
-		databaseURL = "postgres://user:password@localhost:5432/clash_tourney?sslmode=disable"
-	}
+	ctx := context.Background()
 
-	db, err := db.NewDB(databaseURL)
+	databaseURL := os.Getenv("DATABASE_URL")
+	conn, err := pgx.Connect(ctx, databaseURL)
+
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
-	defer db.Close()
+
+	defer conn.Close(ctx)
 
 	log.Println("database connection successful")
 
-	router := api.NewRouter(db)
+	queries := db.New(conn)
+	router := api.NewRouter(queries)
 
 	spa := spaHandler{staticPath: "build", indexPath: "index.html"}
 	router.PathPrefix("/").Handler(spa)

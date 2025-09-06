@@ -1,12 +1,28 @@
 package handlers
 
 import (
-	"database/sql"
+	"encoding/json"
 	"net/http"
+
+	"clash-tourney.com/db"
 )
 
-func UpdateGameHandler(db *sql.DB) http.HandlerFunc {
+func UpdateGameHandler(queries *db.Queries) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// TODO: Implement handler
+		// Placeholder implementation
+		// In a real implementation, you would parse the request body
+		// to get game details to update.
+
+		// Example: Update a game
+		game, err := queries.UpdateGame(r.Context(), db.UpdateGameParams{
+			// Fill with actual data from request
+		})
+		if err != nil {
+			http.Error(w, "Failed to update game", http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(game)
 	}
 }
