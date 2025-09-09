@@ -16,7 +16,11 @@ func EnterTournamentHandler(queries *db.Queries) http.HandlerFunc {
 		// Example: Create a new player
 		player, err := queries.CreatePlayer(r.Context(), db.CreatePlayerParams{
 			// Fill with actual data from request
+			
 		})
+
+		
+
 		if err != nil {
 			http.Error(w, "Failed to create player", http.StatusInternalServerError)
 			return
